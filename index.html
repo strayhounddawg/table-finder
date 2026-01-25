@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find My Poker Table</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white p-6 font-sans min-h-screen">
+
+    <div class="max-w-md mx-auto text-center space-y-8 pt-12">
+        <h1 class="text-3xl font-black text-red-600 italic uppercase">Charity Poker</h1>
+        <p class="text-slate-400">Enter your number to find your table</p>
+
+        <div class="space-y-4">
+            <input type="number" id="pSearch" placeholder="00" 
+                   class="w-full p-8 bg-slate-900 rounded-3xl border-4 border-slate-800 text-6xl text-center font-black text-yellow-500 outline-none focus:border-red-600">
+            <button onclick="findSeat()" class="w-full bg-red-600 p-5 rounded-2xl font-black text-xl shadow-lg">FIND SEAT</button>
+        </div>
+
+        <div id="resArea" class="hidden p-10 bg-slate-900 border-2 border-yellow-600 rounded-[2rem] animate-bounce">
+            <span class="text-slate-500 uppercase text-xs font-bold">Your Table:</span>
+            <div id="tRes" class="text-7xl font-black text-yellow-500 mt-2">--</div>
+        </div>
+    </div>
+
+    <script>
+        // === PASTE YOUR EXPORTED DATA BELOW THIS LINE ===
+        const tableData = [
+            { id: 1, players: [1, 12, 45, 23, 8] },
+            { id: 2, players: [2, 14, 33, 10, 5] }
+            // More will go here...
+        ];
+        // ===============================================
+
+        function findSeat() {
+            const val = parseInt(document.getElementById('pSearch').value);
+            const resArea = document.getElementById('resArea');
+            const tRes = document.getElementById('tRes');
+
+            const found = tableData.find(t => t.players.includes(val));
+            resArea.classList.remove('hidden');
+            
+            if(found) {
+                tRes.innerText = "TABLE " + found.id;
+                tRes.classList.remove('text-red-500');
+            } else {
+                tRes.innerText = "NOT FOUND";
+                tRes.classList.add('text-red-500');
+            }
+        }
+    </script>
+</body>
+</html>
